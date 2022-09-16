@@ -1,0 +1,74 @@
+﻿@page
+@model IndexModel
+@{
+    if (@Model.Mode.Equals("Customer Service"))
+        ViewData["Title"] = "8 X 8 Customer Service Call Queue";
+    else
+        ViewData["Title"] = "8 X 8 Showroom Call Queue";
+}
+
+@{
+    var InQueueBackground = "aqua";
+    var OldestBackground = "aqua";
+}
+
+@if (Model.QueueData.InQueueSeverity == 2)
+{
+    InQueueBackground = "red";
+}
+else if (Model.QueueData.InQueueSeverity == 1)
+{
+    InQueueBackground = "yellow";
+}
+@if (Model.QueueData.OldestSeverity == 2)
+{
+    OldestBackground = "red";
+}
+else if (Model.QueueData.OldestSeverity == 1)
+{
+    OldestBackground = "yellow";
+}
+<br/>
+
+<meta http-equiv="refresh" content="5" />
+
+<div class="text-center" style="background:black">
+    <h1 class="display-4" style="color: wheat">@Model.Mode Queue Status</h1>
+
+    <form method="get">
+        <table style="text-align:center">
+            <tr>
+                <td style="background-color:@InQueueBackground; background-clip:padding-box; border-left: 25px; border-top: 25px; border-right: 25px; color:black; margin: 25px; width:40%">
+                   @Model.QueueData.InQueue
+                </td>
+                <td>
+                    IN QUEUE
+                </td>
+            </tr>
+            <tr>
+                
+                <td style="background:@OldestBackground; color:black; margin: 15px; width:40%">
+                   @Model.QueueData.Oldest
+                </td>
+                <td>
+                    OLDEST
+                </td>
+            </tr>
+            <tr>
+                <td style="background:aqua; color:black; margin: 15px; width:40%">
+                   @Model.QueueData.Available / @Model.QueueData.Talking
+                </td>
+                <td>
+                    AVAILABLE / TALKING
+                </td>
+            </tr>
+            <tr style="height:75px">
+                <td style= "width:40%; font-size:24px;color: darkgoldenrod">
+                  @Model.QueueData.InRelease <br/> Release
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
